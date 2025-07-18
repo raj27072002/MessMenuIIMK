@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIMK Mess Menu - July 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* General Body and Font Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(to right, #004d40, #00695c);
+            color: #ffffff;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        /* Date Controls */
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .controls label {
+            font-weight: 600;
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        .controls input[type="date"] {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        .controls input[type="date"]:focus {
+            outline: none;
+            border-color: #00796b;
+        }
+
+        /* Day of the Week Header */
+        .day-header {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00796b; /* Accent Green */
+            margin-bottom: 30px;
+        }
+
+        /* Menu Grid Layout - Changed to Flexbox for dynamic row */
+        #menu-grid {
+            display: grid;
+            /* 
+              This creates a responsive grid. 
+              - 'auto-fit' tells the grid to fit as many columns as possible.
+              - 'minmax(320px, 1fr)' means each column will be at least 320px wide, 
+                and will stretch to share the available space (1fr).
+              On wide screens, you get 4 columns. On tablets, 2. On phones, 1.
+            */
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        /* Meal Card Styling */
+        .meal-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid #004d40;
+            /* The cards will size themselves based on the grid layout */
+        }
+
+        .meal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .meal-card h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #004d40;
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .meal-card h3 {
+            font-size: 1.1rem;
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            border-left: 4px solid #00796b;
+            padding-left: 10px;
+        }
+
+        /* Menu Item List Styling */
+        .meal-card ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .meal-card ul li {
+            background-color: #f9f9f9;
+            padding: 12px 15px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            border-left: 3px solid transparent;
+            transition: border-left 0.3s, background-color 0.3s;
+        }
+
+        .meal-card ul li:hover {
+            border-left: 3px solid #00796b;
+            background-color: #e8f5e9;
+        }
+
+        /* No Menu Message */
+        #no-menu-message {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #757575;
+            padding: 40px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #333;
+            color: #f4f7f6;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>IIMK Mess Menu</h1>
+        <p>July 2025</p>
+    </header>
+
+    <main class="container">
+        <div class="controls">
+            <label for="date-picker">Select a Date:</label>
+            <input type="date" id="date-picker">
+        </div>
+
+        <div id="day-of-week" class="day-header"></div>
+
+        <div id="menu-grid">
+            <!-- Breakfast Card -->
+            <div class="meal-card" id="breakfast">
+                <h2>🍳 Breakfast</h2>
+                <ul id="breakfast-items"></ul>
+            </div>
+
+            <!-- Lunch Card -->
+            <div class="meal-card" id="lunch">
+                <h2>🍜 Lunch</h2>
+                <h3>Main Course</h3>
+                <ul id="lunch-main-items"></ul>
+                <h3>Extras</h3>
+                <ul id="lunch-extra-items"></ul>
+            </div>
+
+            <!-- Snacks Card -->
+            <div class="meal-card" id="snacks">
+                <h2>☕ Snacks</h2>
+                <ul id="snacks-items"></ul>
+            </div>
+
+            <!-- Dinner Card -->
+            <div class="meal-card" id="dinner">
+                <h2>🍲 Dinner</h2>
+                <h3>Main Course</h3>
+                <ul id="dinner-main-items"></ul>
+                <h3>Extras</h3>
+                <ul id="dinner-extra-items"></ul>
+            </div>
+        </div>
+
+        <div id="no-menu-message" class="hidden">
+            <p>The mess menu is not available for the selected date.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>IIMK Mess Committee</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // The JSON data for the mess menu
+            const messMenuData = {
+                "Monday": {
+                    "Breakfast": ["Cornflakes with Milk", "Bread, Butter, Jam", "Boiled Pulses", "Fruits", "Semiya Bath", "Veg Stew", "Tomato Chutney", "Tea/Coffee", "Boiled Egg"],
+                    "Lunch": {"Main": ["Lacha Pyaz", "Plain Biryani (Basmathi)", "Mirchi Ka Salan", "Mix Raitha", "Mutter Paneer (For Veg)", "Dal Makhani", "Mix Veg Sambar", "Jeera Butter Milk", "Pickle", "Fish Curry"], "Extras": ["Chicken Verpudu", "Corn Paneer Masala"]},
+                    "Snacks": ["Papadi Chat", "Tea/Coffee"],
+                    "Dinner": {"Main": ["Onion Salad", "Bathura", "Chole", "Mix Veg Dry", "Plain Rice", "Dal Thaduka", "Curd", "Ice Cream (50 ml) 1 piece", "Fryums", "Pickle"], "Extras": ["Chicken Masala", "Paneer 65"]}
+                },
+                "Tuesday": {
+                    "Breakfast": ["Chocos with Milk", "Bread, Butter, Jam", "Boiled Pulses", "Fruits", "Medu Vada", "Sambar", "Coconut Chutney", "Tea/Coffee", "Boiled Egg"],
+                    "Lunch": {"Main": ["Tossed Salad", "Chapathi/Phulka", "Boiled/Plain Rice", "Tomato Rice", "Tendli Bhaji", "Lobiya Masala", "Jeera Butter Milk", "Pickle", "Fish Curry"], "Extras": ["Fish Fry", "Paneer Butter Masala"]},
+                    "Snacks": ["Mix Veg Pakoda", "Tea/Coffee"],
+                    "Dinner": {"Main": ["Salad", "Chapathi/Phulka", "Bagara Baingan", "Cabbage Thoran", "Jeera Pulao", "Dal Fry", "Buttermilk", "Fryums", "Pickle"], "Extras": ["Butter Chicken", "Paneer Butter Masala"]}
+                },
+                "Wednesday": {
+                    "Breakfast": ["Chocos with Milk", "Bread, Butter, Jam", "Boiled Pulses", "Fruits", "Pongal", "Aloo Saag", "Coconut Chutney", "Tea/Coffee", "Omlet"],
+                    "Lunch": {"Main": ["Kosambari Salad", "Chapathi/Phulka", "Boiled/Plain Rice", "Coconut Pulao", "Aloo Karela", "Mix Pulses Masala", "Curd", "Pickle", "Bovayya Kaja"], "Extras": ["Chicken Biryani", "Andhra Chilli Paneer"]},
+                    "Snacks": ["Boiled Peanuts", "Tea/Coffee"],
+                    "Dinner": {"Main": ["Salad", "Kal Dosa", "Sambar", "Tomato Chutney", "Veg Fried Rice", "Yellow Dal", "Buttermilk", "Papad", "Pickle"], "Extras": ["Andhra Chicken", "Andhra Chilli Paneer"]}
+                },
+                "Thursday": {
+                    "Breakfast": ["Cornflakes with Milk", "Bread, Butter, Jam", "Boiled Pulses", "Fruits", "Masala Dosa", "Sambar", "Coconut Chutney", "Tea/Coffee", "Boiled Egg"],
+                    "Lunch": {"Main": ["Green Salad", "Chapathi/Phulka", "Boiled/Plain Rice", "Dry Chilli Chutney (Red)", "Mix Veg Thoran", "Aloo Capsicum Gravy", "Sambar", "Butter Milk", "Pickle", "Fish Curry"], "Extras": ["Pepper Chicken Masala", "Paneer Khurchan"]},
+                    "Snacks": ["Masala Vada", "Tea/Coffee"],
+                    "Dinner": {"Main": ["Kuchumber", "Chapathi", "Soya Biryani", "Tomato Chutney", "Raita", "Dal", "Plain Curd", "Fryums", "Pickle"], "Extras": ["Pepper Chicken Masala", "Paneer Khurchan"]}
+                },
+                "Friday": {
+                    "Breakfast": ["Cornflakes with Milk", "Bread, Butter, Jam", "Boiled Pulses", "Fruits", "Aloo Paratha", "Curd", "Tea/Coffee", "Omlet"],
+                    "Lunch": {"Main": ["Tossed Salad", "Chapathi/Phulka", "Boiled/Plain Rice", "Tomato Pulao", "Brinjal Potato Bhaji", "Chole Masala", "Black Dal", "Plain Butter Milk", "Pappad", "Fish Curry"], "Extras": ["Guntur Chicken", "Apollo Fish"]},
+                    "Snacks": ["Vada Pav (1 Set)", "Tea/Coffee"],
+                    "Dinner": {"Main": ["Lacha Pyaz", "Veg Dum Biryani", "Mirchi Ka Salan", "Veg Jaipuri", "Veg Fried Rice", "Yellow Dal", "Mirchi Ka Salan", "Bread Halwa", "Fryums", "Pickle"], "Extras": ["Kadhi Chicken", "Paneer Pepper Fry"]}
+                },
+                "Saturday": {
+                    "Breakfast": ["Chocos with Milk", "Bread, Butter, Jam", "Boiled Pulses", "Fruits", "Masala Idli", "Coconut Chutney", "Tea/Coffee", "Boiled Egg"],
+                    "Lunch": {"Main": ["Ring Onion Salad", "Chapathi/Phulka", "Boiled/Plain Rice", "Tamarind Rice", "Veg Paneer Fried Rice", "Veg Ball Manchurian", "Dal", "Butter Milk", "Fryums", "Fish Curry"], "Extras": ["Tawa Fish", "Kalja Jamun (One)"]},
+                    "Snacks": ["Samosa", "Tea/Coffee"],
+                    "Dinner": {"Main": ["Green Salad", "Chapathi/Phulka", "Veg Biryani", "Raita", "Paneer Muttar Masala", "Dal", "Buttermilk", "Fryums", "Pickle"], "Extras": ["Chicken Chettinad", "Paneer Pepper Fry"]}
+                },
+                "Sunday": {
+                    "Breakfast": ["Cornflakes with Milk", "Bread, Butter, Jam", "Boiled Pulses", "Fruits", "Pav", "Veg Upma", "Tomato Chutney", "Tea/Coffee", "Boiled Egg"],
+                    "Lunch": {"Main": ["Green Salad", "Chapathi/Phulka", "Boiled/Plain Rice", "Green Gram Curry", "Dal", "Tomato Pappu", "Pickle", "Fish Curry"], "Extras": ["Hyd Chicken Biryani", "Paneer Dum Biryani"]},
+                    "Snacks": ["Cutlet", "Tea/Coffee"],
+                    "Dinner": {"Main": ["Kosambari", "Chapathi/Phulka", "Veg Biryani", "Lowki Chana Dry", "Curd", "Buttermilk", "Fryums", "Pickle"], "Extras": ["Chicken Chettinad", "Paneer Kurkure"]}
+                }
+            };
+
+            const datePicker = document.getElementById('date-picker');
+            const dayOfWeekEl = document.getElementById('day-of-week');
+            const menuGrid = document.getElementById('menu-grid');
+            const noMenuMessage = document.getElementById('no-menu-message');
+
+            // DOM Elements for meal items
+            const breakfastList = document.getElementById('breakfast-items');
+            const lunchMainList = document.getElementById('lunch-main-items');
+            const lunchExtraList = document.getElementById('lunch-extra-items');
+            const snacksList = document.getElementById('snacks-items');
+            const dinnerMainList = document.getElementById('dinner-main-items');
+            const dinnerExtraList = document.getElementById('dinner-extra-items');
+
+            const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+            function setDatePickerDefaults() {
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = today.getMonth();
+                
+                // Set the date to today if it's July 2025, otherwise default to the first day of the month
+                const demonstrationDate = (year === 2025 && month === 6) ? today : new Date('2025-07-01T12:00:00Z');
+
+                const yyyy = demonstrationDate.getFullYear();
+                const mm = String(demonstrationDate.getMonth() + 1).padStart(2, '0');
+                const dd = String(demonstrationDate.getDate()).padStart(2, '0');
+
+                datePicker.value = `${yyyy}-${mm}-${dd}`;
+                datePicker.min = "2025-07-01";
+                datePicker.max = "2025-07-31";
+            }
+
+            function displayMenuForDate(dateString) {
+                // Adjust for timezone by parsing the date as UTC to avoid off-by-one day errors
+                const date = new Date(dateString);
+                const utcDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+                const dayName = dayNames[utcDate.getUTCDay()];
+                const menu = messMenuData[dayName];
+                
+                const month = utcDate.toLocaleString('en-US', { month: 'long' });
+                const day = utcDate.getUTCDate();
+
+                if (menu) {
+                    menuGrid.style.display = 'grid';
+                    noMenuMessage.classList.add('hidden');
+                    
+                    dayOfWeekEl.textContent = `${dayName}, ${month} ${day}`;
+
+                    updateMealList(breakfastList, menu.Breakfast);
+                    updateMealList(snacksList, menu.Snacks);
+                    updateMealList(lunchMainList, menu.Lunch.Main);
+                    updateMealList(lunchExtraList, menu.Lunch.Extras);
+                    updateMealList(dinnerMainList, menu.Dinner.Main);
+                    updateMealList(dinnerExtraList, menu.Dinner.Extras);
+
+                } else {
+                    menuGrid.style.display = 'none';
+                    noMenuMessage.classList.remove('hidden');
+                    dayOfWeekEl.textContent = '';
+                }
+            }
+
+            function updateMealList(ulElement, items) {
+                ulElement.innerHTML = ''; // Clear previous items
+                if (items && items.length > 0) {
+                    items.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = item;
+                        ulElement.appendChild(li);
+                    });
+                } else {
+                    const li = document.createElement('li');
+                    li.textContent = "No items for this meal.";
+                    ulElement.appendChild(li);
+                }
+            }
+
+            datePicker.addEventListener('change', (e) => {
+                displayMenuForDate(e.target.value);
+            });
+
+            // Initial setup on page load
+            setDatePickerDefaults();
+            displayMenuForDate(datePicker.value);
+        });
+    </script>
+</body>
+</html>
